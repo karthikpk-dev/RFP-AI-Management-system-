@@ -101,15 +101,12 @@ export default function Dashboard() {
 
             {/* Quick Actions */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Link to="/rfps/create" className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-600 to-primary-700 p-8 text-white shadow-lg shadow-primary-500/30 hover:shadow-primary-500/40 transition-all duration-300 hover:-translate-y-1">
-                    <div className="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
-                    <div className="relative z-10">
-                        <div className="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mb-6 text-3xl">
-                            ✨
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2 font-display">Create New RFP</h3>
-                        <p className="text-primary-100">Use AI to structure your requirements and generate proposals instantly.</p>
+                <Link to="/rfps/create" className="card group hover:border-primary-200">
+                    <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mb-6 text-3xl group-hover:scale-110 transition-transform duration-300">
+                        ✨
                     </div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">Create New RFP</h3>
+                    <p className="text-slate-500">Use AI to structure your requirements and generate proposals instantly.</p>
                 </Link>
 
                 <Link to="/vendors" className="card group hover:border-blue-200">
