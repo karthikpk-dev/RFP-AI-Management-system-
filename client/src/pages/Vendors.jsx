@@ -62,122 +62,149 @@ export default function Vendors() {
 
     if (loading) {
         return (
-            <div className="flex items-center justify-center h-64">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <div className="flex items-center justify-center h-96">
+                <div className="relative">
+                    <div className="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-8 h-8 bg-white rounded-full"></div>
+                    </div>
+                </div>
             </div>
         );
     }
 
     return (
-        <div>
-            <div className="flex items-center justify-between mb-8">
+        <div className="space-y-8">
+            <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Vendors</h1>
-                    <p className="text-gray-600 mt-1">Manage your vendor database</p>
+                    <h1 className="text-3xl font-bold font-display text-slate-900">Vendors</h1>
+                    <p className="text-slate-600 mt-1">Manage your vendor database and contacts</p>
                 </div>
                 <button
                     onClick={() => setShowForm(!showForm)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="btn-primary flex items-center"
                 >
-                    {showForm ? 'Cancel' : '+ Add Vendor'}
+                    {showForm ? 'Cancel' : (
+                        <>
+                            <span className="mr-2">+</span>
+                            Add Vendor
+                        </>
+                    )}
                 </button>
             </div>
 
             {/* Add Form */}
             {showForm && (
-                <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">New Vendor</h2>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
-                            <input
-                                type="text"
-                                value={formData.name}
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
+                <div className="card animate-float" style={{ animation: 'none', animationDuration: '0s' }}>
+                    <h2 className="text-lg font-bold text-slate-900 mb-6 font-display">New Vendor</h2>
+                    <form onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Name *</label>
+                                <input
+                                    type="text"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                    className="input"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Email *</label>
+                                <input
+                                    type="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    className="input"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Phone</label>
+                                <input
+                                    type="text"
+                                    value={formData.phone}
+                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                    className="input"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">Company</label>
+                                <input
+                                    type="text"
+                                    value={formData.company}
+                                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                                    className="input"
+                                />
+                            </div>
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                            <input
-                                type="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                                required
-                            />
+                        <div className="mt-6 flex justify-end">
+                            <button
+                                type="submit"
+                                disabled={saving}
+                                className="btn-primary bg-emerald-600 hover:bg-emerald-700 shadow-emerald-500/30 hover:shadow-emerald-500/40"
+                            >
+                                {saving ? 'Saving...' : 'Save Vendor'}
+                            </button>
                         </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-                            <input
-                                type="text"
-                                value={formData.phone}
-                                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
-                            <input
-                                type="text"
-                                value={formData.company}
-                                onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
-                    </div>
-                    <button
-                        type="submit"
-                        disabled={saving}
-                        className="mt-4 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50"
-                    >
-                        {saving ? 'Saving...' : 'Save Vendor'}
-                    </button>
-                </form>
+                    </form>
+                </div>
             )}
 
             {/* Vendor Table */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="card p-0 overflow-hidden">
                 {vendors.length === 0 ? (
-                    <div className="p-12 text-center">
-                        <p className="text-gray-500 mb-4">No vendors added yet</p>
-                        <button onClick={() => setShowForm(true)} className="text-blue-600 hover:text-blue-700 font-medium">
+                    <div className="p-16 text-center">
+                        <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl">
+                            👥
+                        </div>
+                        <p className="text-slate-500 mb-6">No vendors added yet</p>
+                        <button onClick={() => setShowForm(true)} className="text-primary-600 hover:text-primary-700 font-semibold hover:underline">
                             Add your first vendor
                         </button>
                     </div>
                 ) : (
-                    <table className="w-full">
-                        <thead className="bg-gray-50 border-b border-gray-100">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Info</th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {vendors.map((vendor) => (
-                                <tr key={vendor.id} className="hover:bg-gray-50">
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="font-medium text-gray-900">{vendor.name}</div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-gray-600">{vendor.email}</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-gray-500 text-sm">
-                                        {vendor.contact_info?.phone || vendor.contact_info?.company || '-'}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                                        <button
-                                            onClick={() => handleDelete(vendor.id)}
-                                            className="text-red-600 hover:text-red-700 text-sm font-medium"
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="w-full">
+                            <thead className="bg-slate-50 border-b border-slate-100">
+                                <tr>
+                                    <th className="px-8 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
+                                    <th className="px-8 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
+                                    <th className="px-8 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contact Info</th>
+                                    <th className="px-8 py-4 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                {vendors.map((vendor) => (
+                                    <tr key={vendor.id} className="hover:bg-slate-50 transition-colors group">
+                                        <td className="px-8 py-4 whitespace-nowrap">
+                                            <div className="flex items-center">
+                                                <div className="w-8 h-8 rounded-full bg-primary-100 text-primary-600 flex items-center justify-center text-sm font-bold mr-3">
+                                                    {vendor.name.charAt(0)}
+                                                </div>
+                                                <div className="font-medium text-slate-900">{vendor.name}</div>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-4 whitespace-nowrap text-slate-600">{vendor.email}</td>
+                                        <td className="px-8 py-4 whitespace-nowrap text-slate-500 text-sm">
+                                            {vendor.contact_info?.phone || vendor.contact_info?.company || '-'}
+                                        </td>
+                                        <td className="px-8 py-4 whitespace-nowrap text-right">
+                                            <button
+                                                onClick={() => handleDelete(vendor.id)}
+                                                className="text-slate-400 hover:text-red-600 transition-colors p-2 hover:bg-red-50 rounded-lg"
+                                                title="Delete Vendor"
+                                            >
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 )}
             </div>
         </div>
